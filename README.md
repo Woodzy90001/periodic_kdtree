@@ -13,37 +13,44 @@ For MD simulations, the interatomic distance is usualy 1-2 angstroms, so a dista
 Basic Usage
 -----------
 
-from periodic_kdtree import PeriodicCKDTree
-import numpy as np
+from periodic_kdtree import PeriodicCKDTree  
+import numpy as np  
 
-# Cutoff distance (0 or negative means open boundaries in that dimension)
-cutoff = np.array([5, 5, 0])   # xy periodic
 
-# Points
-size = 200
-numPoints = 10000
-points = np.random.random((numPoints, 3))*size
+\# Cutoff distance (0 or negative means open boundaries in that dimension)  
+cutoff = np.array([5, 5, 0])   # xy periodic  
+  
+\# Points 
+size = 200  
+numPoints = 10000  
+points = np.random.random((numPoints, 3))*size  
 
-# Build kd-tree
+
+\# Build kd-tree  
 tree = PeriodicKDTree(cutoff, points, size)
 
-# Find 4 closest neighbors to each point
+\# Find 4 closest neighbors to each point  
 dists, index = tree.query(points, k=4)
 
 Tests and benchmarks
 --------------------
 
-See test_periodic_kdtree.py, benchmark.py and nonperiodic_benchmark.py
-(based off of Patrick Varilly's benchmarks)
+See test_periodic_kdtree.py, benchmark.py and nonperiodic_benchmark.py  
+(based off of Patrick Varilly's benchmarks)  
 
-The initilisation time is substantially larger for periodic, but the query time is comparable to the standard KDTree.
+The initilisation time is substantially larger for periodic, but the query time is comparable to the standard KDTree.  
 
-Sample periodic benchmarks (time in seconds)
+Sample periodic benchmarks (time in seconds)  
 --------------------------------------------
 
-dimensions 3, 10000 points
-PeriodicKDTree constructed:	0.07340288162231445
-PeriodicKDTree 1000 lookups:	0.00892782211303711
-KDTree constructed:	0.002972126007080078
-KDTree 1000 lookups:	0.008433818817138672
+dimensions 3, 10000 points  
+PeriodicKDTree constructed:	0.07340288162231445  
+PeriodicKDTree 1000 lookups:	0.00892782211303711  
+KDTree constructed:	0.002972126007080078  
+KDTree 1000 lookups:	0.008433818817138672  
 
+dimensions 3, 10000 points  
+PeriodicKDTree constructed:	7.226734161376953  
+PeriodicKDTree 1000000 lookups:	2.364431858062744  
+KDTree constructed:	0.44391894340515137  
+KDTree 1000000 lookups:	2.226536750793457  
